@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+/* body,
+:root {
+  height: 100%;
+} */
+ 
+.bg-Bg {
+  background-image: url('/Bg.png');
+  background-size: contain;
+  background-position: center;
+}
+
+.bg-BgD {
+  background-image: url('/Bg2.png');
+  background-size: contain;
+  background-position: center;
+}
+
+/* scroll bar */
+::-webkit-scrollbar {
+  width: 10px;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #262626;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #00e599;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00e599;
+}
+
+
+
+.loading {
+  border-radius: 50%;
+  background: 
+    radial-gradient(farthest-side,#F4F4F4 94%,#0000) top/8px 8px no-repeat,
+    conic-gradient(#0000 30%,#F4F4F4);
+  -webkit-mask: radial-gradient(farthest-side,#0000 calc(100% - 8px),#000 0);
+  animation:s3 1s infinite linear;
+}
+
+@keyframes s3{ 
+  100%{transform: rotate(1turn)}
+}
+
