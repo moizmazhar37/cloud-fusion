@@ -55,12 +55,12 @@ export const LoginForm = () => {
             setError(data.error);
           }
 
-          if (data?.success) {
+          if ((data as any)?.success) {
             form.reset();
-            setSuccess(data.success);
+            setSuccess((data as any).success);
           }
 
-          if (data?.twoFactor) {
+          if ((data as any)?.twoFactor) {
             setShowTwoFactor(true);
           }
         })

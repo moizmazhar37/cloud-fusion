@@ -1,10 +1,13 @@
 import NextAuth from "next-auth"
 import { UserRole } from "@prisma/client";
 import { PrismaAdapter } from "@auth/prisma-adapter";
+import bcrypt from "bcryptjs";
+import Credentials from "next-auth/providers/credentials";
 import { db } from "@/lib/db";
 import authConfig from "@/auth.config";
-import { getUserById } from "@/data/user";
+import { getUserById, getUserByEmail } from "@/data/user";
 import { getAccountByUserId } from "./data/account";
+import { LoginSchema } from "@/schemas";
 
 export const {
   handlers: { GET, POST },
@@ -21,6 +24,30 @@ export const {
     async linkAccount({ user }) {
     }
   },
+  providers: [
+    ...authConfig.providers,
+    Credentials({
+      async authorize(credentials) {
+        const validatedFields = LoginSchema.safeParse(credentials);
+
+        if (validatedFields.success) {
+          const { email, password } = validatedFields.data;
+
+          const user = await getUserByEmail(email);
+          if (!user || !user.password) return null;
+
+          const passwordsMatch = await bcrypt.compare(
+            password,
+            user.password,
+          );
+
+          if (passwordsMatch) return user;
+        }
+
+        return null;
+      }
+    })
+  ],
   callbacks: {
     async signIn({ user, account }) {
       if (account?.provider !== "credentials") return true;
@@ -69,5 +96,4 @@ export const {
   },
   adapter: PrismaAdapter(db),
   session: { strategy: "jwt" },
-  ...authConfig,
 });

@@ -399,7 +399,7 @@ function DoSelector({ setForm, form, setPage, page }: { setForm: any, form: any,
                             >
                                 <option value="" disabled>Select Region</option>
                                 {Object.keys(DigitalOceanRegions).map((regionKey: string, index: number) => {
-                                    return <option key={index} value={regionKey}>{DigitalOceanRegions[regionKey]}</option>
+                                    return <option key={index} value={regionKey}>{(DigitalOceanRegions as any)[regionKey]}</option>
                                 })}
                             </select>
                         </div>
@@ -449,8 +449,8 @@ function DoSelector({ setForm, form, setPage, page }: { setForm: any, form: any,
                             value={form.size}
                         >
                             <option value="" disabled>Select Instance Type</option>
-                            {form.pricingModel && Object.keys(DigitalOceanDropdowns[form.pricingModel]).map((instanceType: string, index: number) => {
-                                return <option key={index} value={DigitalOceanDropdowns[form.pricingModel][instanceType]}>{instanceType}</option>
+                            {form.pricingModel && Object.keys((DigitalOceanDropdowns as any)[form.pricingModel]).map((instanceType: string, index: number) => {
+                                return <option key={index} value={(DigitalOceanDropdowns as any)[form.pricingModel][instanceType]}>{instanceType}</option>
                             })}
                         </select>
                     </div>
